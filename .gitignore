@@ -1,26 +1,25 @@
-# metals
-.metals
-.bloop
-project/**/metals.sbt
-
-# Scala specific
-target
 *.class
-
-# IntelliJ specific
+*.log
 *.iml
 *.ipr
 *.iws
 .idea
 out
-
-# SBT
+.cache/
+.history/
+.lib/
 dist/*
 target/
+bin/
+libexec/
 lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
-.history
-.cache
-.lib/
+logs/
+project/*-shim.sbt
+project/project/
+project/target/
+target/
+.scala_dependencies
+.worksheet
