@@ -22,47 +22,6 @@ class myCNN (val sparkSession: sql.SparkSession) {
   utils.LoggerFilter.redirectSparkInfoLogs()
   Logger4j.getLogger("com.intel.analytics.bigdl.optim").setLevel(Levle4j.INFO)
 
-  def defineModel(
-   kernel_row: Int = 3,
-   kernel_col: Int = 3,
-   filter_number: Int = 32
- ): nn.Sequential[Float] = nn.Sequential()
-    .add(nn.Reshape(Array(1, 28, 28)))
-    .add(nn.Dropout(0.8))
-    .add(nn.SpatialConvolution(
-      nInputPlane = 1,
-      nOutputPlane = filter_number,
-      kernelW = kernel_row,
-      kernelH = kernel_col
-    ))
-    .add(nn.PReLU())
-    .add(nn.Dropout(0.8))
-    .add(nn.SpatialMaxPooling(kW = 2, kH = 2, dW = 2, dH = 2))
-    .add(nn.SpatialConvolution(
-      nInputPlane = filter_number,
-      nOutputPlane = filter_number * 2,
-      kernelW = kernel_row,
-      kernelH = kernel_col
-    ))
-    .add(nn.PReLU())
-    .add(nn.Dropout(0.8))
-    .add(nn.SpatialConvolution(
-      nInputPlane = filter_number * 2,
-      nOutputPlane = filter_number * 2,
-      kernelW = kernel_row,
-      kernelH = kernel_col
-    ))
-    .add(nn.PReLU())
-    .add(nn.Dropout(0.8))
-    .add(nn.SpatialMaxPooling(kW = 2, kH = 2, dW = 2, dH = 2))
-    // The math here is "lastOutputPlane * spatialMaxPoolingDimensions". This is basically a flatten layer.
-    .add(nn.Reshape(Array(filter_number * 2 * 4 * 4)))
-    .add(nn.Linear(filter_number * 2 * 4 * 4, 100))
-    .add(nn.PReLU())
-    .add(nn.Dropout(0.8))
-    .add(nn.Linear(100, 10))
-    .add(nn.SoftMax())
-
   def makeLeNet5(): nn.Sequential[Float] = nn.Sequential()
     .add(nn.Reshape(Array(1, 28, 28)))
     .add(nn.SpatialConvolution(1, 6, 5, 5))
